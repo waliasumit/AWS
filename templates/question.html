@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="card">
+    <div class="card-body">
+        <h2 class="card-title">Question {{ current }} of {{ total }}</h2>
+        <p class="question-text">{{ question.question }}</p>
+        
+        <form action="{{ url_for('answer') }}" method="post">
+            {% for option in question.options %}
+            <div class="option">
+                <input type="radio" class="btn-check" name="answer" id="option{{ loop.index0 }}" 
+                       value="{{ loop.index0 }}" required>
+                <label class="btn btn-outline-primary w-100 text-start" for="option{{ loop.index0 }}">
+                    {{ option }}
+                </label>
+            </div>
+            {% endfor %}
+            
+            <button type="submit" class="btn btn-primary w-100 mt-3">Next Question</button>
+        </form>
+    </div>
+</div>
+{% endblock %} 

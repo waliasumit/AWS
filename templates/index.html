@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="card">
+    <div class="card-body">
+        <h1 class="card-title text-center mb-4">AWS Data Engineer Certification Practice</h1>
+        
+        {% if error %}
+        <div class="alert alert-danger" role="alert">
+            {{ error }}
+        </div>
+        {% endif %}
+        
+        <div class="row row-cols-1 row-cols-md-3 g-4 mb-4">
+            <!-- S3 Card -->
+            <div class="col">
+                <div class="card h-100">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Amazon S3</h5>
+                        <p class="card-text">Practice questions about Amazon Simple Storage Service (S3)</p>
+                        <form action="{{ url_for('start_quiz') }}" method="post">
+                            <input type="hidden" name="topic" value="s3">
+                            <button type="submit" class="btn btn-primary">Start S3 Quiz</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Redshift Card -->
+            <div class="col">
+                <div class="card h-100">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Amazon Redshift</h5>
+                        <p class="card-text">Practice questions about Amazon Redshift data warehouse</p>
+                        <form action="{{ url_for('start_quiz') }}" method="post">
+                            <input type="hidden" name="topic" value="redshift">
+                            <button type="submit" class="btn btn-primary">Start Redshift Quiz</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Glue Card -->
+            <div class="col">
+                <div class="card h-100">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">AWS Glue</h5>
+                        <p class="card-text">Practice questions about AWS Glue ETL service</p>
+                        <form action="{{ url_for('start_quiz') }}" method="post">
+                            <input type="hidden" name="topic" value="glue">
+                            <button type="submit" class="btn btn-primary">Start Glue Quiz</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="alert alert-info">
+            <h5 class="alert-heading">How it works:</h5>
+            <ol class="mb-0">
+                <li>Select an AWS service from the cards above</li>
+                <li>You'll get 5 random questions about that service</li>
+                <li>Answer each question to test your knowledge</li>
+                <li>Get detailed explanations for each answer</li>
+                <li>Track your score and improve your understanding</li>
+            </ol>
+        </div>
+    </div>
+</div>
+{% endblock %} 
