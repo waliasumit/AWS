@@ -2,9 +2,29 @@ from flask import Flask, render_template, request, redirect, url_for, session
 import json
 import random
 import os
+import qrcode
+import io
+import base64
 
 app = Flask(__name__)
 app.secret_key = os.environ.get('SECRET_KEY', 'your-secret-key-here')  # Use environment variable in production
+
+def generate_qr_code(data):
+    qr = qrcode.QRCode(
+        version=1,
+        error_correction=qrcode.constants.ERROR_CORRECT_L,
+        box_size=10,
+        border=4,
+    )
+    qr.add_data(data)
+    qr.make(fit=True)
+    img = qr.make_image(fill_color="black", back_color="white")
+    
+    # Convert the image to base64
+    img_buffer = io.BytesIO()
+    img.save(img_buffer, format='PNG')
+    img_str = base64.b64encode(img_buffer.getvalue()).decode()
+    return img_str
 
 # Questions database
 questions_database = {
@@ -216,7 +236,9 @@ questions_database = {
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    # Generate QR code for the current URL
+    qr_code = generate_qr_code(request.url)
+    return render_template('index.html', qr_code=qr_code)
 
 @app.route('/start_quiz', methods=['POST'])
 def start_quiz():
